@@ -1,0 +1,46 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# Sample data: YearsExperience vs Salary
+data = {
+    'YearsExperience': [1, 2, 3, 4, 5],
+    'Salary': [30000, 35000, 40000, 45000, 50000]
+}
+
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Simple EDA
+print("Data:\n", df)
+print("\nSummary:\n", df.describe())
+print("\nCorrelation:\n", df.corr())
+
+# Scatter plot
+plt.scatter(df['YearsExperience'], df['Salary'])
+plt.title('Experience vs Salary')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.grid(True)
+plt.show()
+
+# Linear Regression Model
+X = df[['YearsExperience']]  # independent variable
+y = df['Salary']             # dependent variable
+
+model = LinearRegression()
+model.fit(X, y)
+
+# Show slope and intercept
+print("\nSlope:", model.coef_[0])
+print("Intercept:", model.intercept_)
+
+# Predict and plot
+y_pred = model.predict(X)
+plt.scatter(X, y, color='blue')
+plt.plot(X, y_pred, color='red')  # regression line
+plt.title('Linear Regression Line')
+plt.xlabel('Years of Experience')
+plt.ylabel('Salary')
+plt.grid(True)
+plt.show()
