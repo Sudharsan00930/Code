@@ -1,0 +1,25 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import Perceptron
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import LabelEncoder
+
+# Load dataset
+url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
+cols = ['sepal_len', 'sepal_wid', 'petal_len', 'petal_wid', 'species']
+data = pd.read_csv(url, names=cols)
+
+# Prepare data
+X = data.drop('species', axis=1)
+y = LabelEncoder().fit_transform(data['species'])
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+# Perceptron without bias
+model_no_bias = Perceptron(fit_intercept=False)
+model_no_bias.fit(X_train, y_train)
+print("Accuracy without bias:", accuracy_score(y_test, model_no_bias.predict(X_test)))
+
+# Perceptron with bias
+model_with_bias = Perceptron(fit_intercept=True)
+model_with_bias.fit(X_train, y_train)
+print("Accuracy with bias:", accuracy_score(y_test, model_with_bias.predict(X_test)))
