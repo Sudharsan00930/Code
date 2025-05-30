@@ -1,0 +1,39 @@
+from sklearn.datasets import load_iris
+from sklearn.linear_model import Perceptron
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score
+
+
+iris = load_iris()
+X = iris.data 
+y = iris.target  
+
+
+X = X[y != 2]
+y = y[y != 2]
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
+
+
+clf_with_bias = Perceptron(fit_intercept=True, max_iter=1000, tol=1e-3)
+clf_with_bias.fit(X_train, y_train)
+y_pred_with_bias = clf_with_bias.predict(X_test)
+
+
+clf_without_bias = Perceptron(fit_intercept=False, max_iter=1000, tol=1e-3)
+clf_without_bias.fit(X_train, y_train)
+y_pred_without_bias = clf_without_bias.predict(X_test)
+
+
+acc_with_bias = accuracy_score(y_test, y_pred_with_bias)
+acc_without_bias = accuracy_score(y_test, y_pred_without_bias)
+
+print("Accuracy with bias: {:.2f}".format(acc_with_bias * 100))
+print("Accuracy without bias: {:.2f}".format(acc_without_bias * 100))
