@@ -1,0 +1,40 @@
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.model_selection import train_test_split
+import pandas as pd
+
+# Simulated dataset with bias
+data = {
+    'score': [80, 70, 60, 50, 40, 30, 20, 90, 85, 65, 55, 45, 35, 25],
+    'gender': ['M', 'M', 'M', 'M', 'M', 'M', 'M', 'F', 'F', 'F', 'F', 'F', 'F', 'F'],
+    'selected': [1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0]
+}
+
+df = pd.DataFrame(data)
+
+# Convert gender to numeric
+df['gender_code'] = df['gender'].apply(lambda x: 1 if x == 'F' else 0)
+
+# Features and label
+X = df[['score', 'gender_code']]
+y = df['selected']
+
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Train model
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# Predictions
+y_pred = model.predict(X_test)
+
+# Evaluation
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
+
+# Ethical evaluation
+print("\nBias check by gender:")
+df['predicted'] = model.predict(X)
+print(df.groupby('gender')['predicted'].mean())
