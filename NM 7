@@ -1,0 +1,20 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+data = {
+ 'Week': ['Week1','Week2','Week3','Week4','Week5'],
+ 'Sales': [5000,6000,None,5500,7000]
+}
+df = pd.DataFrame(data)
+df['Sales'] = df['Sales'].fillna(0)
+total_sales = df['Sales'].sum()
+avg_sales = df['Sales'].mean()
+print(f"Total sales: {total_sales}")
+print(f"Average weekly sales: {avg_sales:.2f}")
+top_week = df.loc[df['Sales'].idxmax(), 'Week']
+print(f"Week with highest sales: {top_week}")
+plt.plot(df['Week'], df['Sales'], marker='o', color='green')
+plt.xlabel('Week')
+plt.ylabel('Sales')
+plt.title('Weekly Sales Trend')
+plt.grid(True)
+plt.show()
