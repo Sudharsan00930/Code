@@ -1,0 +1,14 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+data = {
+ 'Employee': ['E001','E002','E003','E004','E005'],
+ 'Days_Present': [20,18,None,22,19]
+}
+df = pd.DataFrame(data)
+df['Days_Present'] = df['Days_Present'].fillna(0)
+top_employee = df.loc[df['Days_Present'].idxmax(), 'Employee']
+print(f"Employee with highest attendance: {top_employee}")
+df.plot(kind='bar', x='Employee', y='Days_Present', color='blue', figsize=(8,5))
+plt.ylabel('Days Present')
+plt.title('Employee Attendance')
+plt.show()
