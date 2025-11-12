@@ -1,0 +1,17 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data = {
+    'Student_ID': ['S001','S002','S003','S004','S005','S006'],
+    'Completion_Status': ['Yes','No',None,'Yes','No','Yes']
+}
+df = pd.DataFrame(data)
+
+df['Completion_Status'] = df['Completion_Status'].fillna('No')
+completion_counts = df['Completion_Status'].value_counts()
+print(completion_counts)
+
+completion_counts.plot(kind='pie', autopct='%1.1f%%', colors=['green','red'], figsize=(6,6))
+plt.title('Course Completion Status')
+plt.ylabel('')
+plt.show()
