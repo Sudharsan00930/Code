@@ -1,0 +1,20 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+data = {
+ 'Date': ['2025-05-10','2025-05-11','2025-05-12','2025-05-13','2025-05-14','2025-05-15'],
+ 'Min_Temp': [25,26,None,24,27,28],
+ 'Max_Temp': [35,36,34,None,38,40]
+}
+df = pd.DataFrame(data)
+df['Min_Temp'] = df['Min_Temp'].fillna(df['Min_Temp'].mean())
+df['Max_Temp'] = df['Max_Temp'].fillna(df['Max_Temp'].mean())
+df['Average_Temp'] = (df['Min_Temp'] + df['Max_Temp'])/2
+hottest_date = df.loc[df['Average_Temp'].idxmax(), 'Date']
+print(f"Date with highest average temperature: {hottest_date}")
+plt.plot(df['Date'], df['Average_Temp'], marker='o', color='orange')
+plt.xlabel('Date')
+plt.ylabel('Average Temperature')
+plt.title('Average Temperature Over Time')
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.show()
