@@ -1,0 +1,18 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+data = {
+ 'Movie_Name': ['Avengers','Inception','Titanic','Interstellar','Joker','Spider-Man'],
+ 'Viewer_Rating': [4.8,4.9,None,4.7,4.5,4.6]
+}
+df = pd.DataFrame(data)
+df = df.dropna(subset=['Viewer_Rating'])
+avg_rating = df['Viewer_Rating'].mean()
+print(f"Average rating: {avg_rating:.2f}")
+top_movies = df.sort_values('Viewer_Rating', ascending=False).head(3)
+print("Top 3 movies:")
+print(top_movies[['Movie_Name','Viewer_Rating']])
+df.sort_values('Viewer_Rating', ascending=False).head(5).plot(kind='bar', x='Movie_Name', 
+y='Viewer_Rating', color='purple', figsize=(8,5))
+plt.ylabel('Rating')
+plt.title('Top 5 Movie Ratings')
+plt.show()
