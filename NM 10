@@ -1,0 +1,20 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+data = {
+ 'Date': ['2025-06-01','2025-06-02','2025-06-03','2025-06-04','2025-06-05'],
+ 'Visitors': [1200,1500,None,1700,1600]
+}
+df = pd.DataFrame(data)
+df['Visitors'] = df['Visitors'].fillna(0)
+total_visitors = df['Visitors'].sum()
+avg_visitors = df['Visitors'].mean()
+print(f"Total visitors: {total_visitors}")
+print(f"Average daily visitors: {avg_visitors:.2f}")
+top_date = df.loc[df['Visitors'].idxmax(), 'Date']
+print(f"Date with highest traffic: {top_date}")
+plt.plot(df['Date'], df['Visitors'], marker='o', color='magenta')
+plt.xlabel('Date')
+plt.ylabel('Visitors')
+plt.title('Website Traffic Trend')
+plt.grid(True)
+plt.show()
