@@ -1,0 +1,15 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+data = {
+ 'Student': ['S1','S2','S3','S4','S5'],
+ 'Marks': [85,90,None,78,92]
+}
+df = pd.DataFrame(data)
+avg_marks = df['Marks'].mean()
+df['Marks'] = df['Marks'].fillna(avg_marks)
+top_student = df.loc[df['Marks'].idxmax(), 'Student']
+print(f"Student with highest marks: {top_student}")
+df.plot(kind='bar', x='Student', y='Marks', color='cyan', figsize=(8,5))
+plt.ylabel('Marks')
+plt.title('Student Marks')
+plt.show()
