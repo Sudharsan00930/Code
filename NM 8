@@ -1,0 +1,14 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+data = {
+ 'Product': ['Laptop','Mobile','Tablet','Keyboard','Mouse'],
+ 'Stock': [50,None,30,15,25]
+}
+df = pd.DataFrame(data)
+df['Stock'] = df['Stock'].fillna(0)
+low_stock = df.loc[df['Stock'].idxmin(), 'Product']
+print(f"Product with lowest stock: {low_stock}")
+df.plot(kind='bar', x='Product', y='Stock', color='orange', figsize=(8,5))
+plt.ylabel('Stock Quantity')
+plt.title('Product Stock Levels')
+plt.show()
