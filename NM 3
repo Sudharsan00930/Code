@@ -1,0 +1,21 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+data = {
+ 'Date': ['2025-04-10','2025-04-11','2025-04-12','2025-04-13','2025-04-14','2025-04-15'],
+ 'Cases': [500,450,800,None,600,550]
+}
+df = pd.DataFrame(data)
+df['Cases'] = df['Cases'].fillna(0)
+total_cases = df['Cases'].sum()
+avg_cases = df['Cases'].mean()
+print(f"Total cases: {total_cases}")
+print(f"Average daily cases: {avg_cases:.2f}")
+peak_date = df.loc[df['Cases'].idxmax(), 'Date']
+print(f"Date with highest cases: {peak_date}")
+plt.plot(df['Date'], df['Cases'], marker='o', color='red')
+plt.xlabel('Date')
+plt.ylabel('Daily Cases')
+plt.title('COVID-19 Daily Cases Trend')
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.show()
